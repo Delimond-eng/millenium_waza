@@ -5,6 +5,7 @@
 /storage/*.key
 /vendor
 /template
+/template.zip
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
