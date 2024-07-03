@@ -29,13 +29,12 @@ return new class extends Migration
             $table->string("poids_kg");
             $table->string("lieu_livraison");
             $table->string("date_livraison");
-            $table->string("poids_kg");
             $table->string("status")->default("actif");
             $table->string("observation")->nullable();
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("fournisseur_id");
             $table->unsignedBigInteger("transporteur_id");
-            $table->unsignedBigInteger("moyen_expodition_id");
+            $table->unsignedBigInteger("moyen_expedition_id");
             $table->unsignedBigInteger("client_id");
             $table->unsignedBigInteger("exportation_id");
             $table->timestamps();

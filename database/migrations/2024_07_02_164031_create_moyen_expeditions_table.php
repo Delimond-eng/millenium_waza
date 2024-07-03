@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('moyen_expeditions', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->string('status')->default('actif');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

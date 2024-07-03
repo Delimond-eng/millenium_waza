@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
+            $table->string('libelle');
+            $table->string('status')->default('actif');
             $table->timestamps();
         });
     }

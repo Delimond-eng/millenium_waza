@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
+            $table->string('libelle');
+            $table->string('status')->default('actif');
+            $table->unsignedBigInteger('ville_id');
             $table->timestamps();
         });
     }

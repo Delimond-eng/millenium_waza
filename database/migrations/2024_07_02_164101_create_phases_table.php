@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('phases', function (Blueprint $table) {
             $table->id();
+            $table->string('libelle');
+            $table->text('detail');
+            $table->string('status')->default('actif');
+            $table->unsignedBigInteger('job_id');
             $table->timestamps();
         });
     }

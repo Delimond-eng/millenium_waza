@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('log_files', function (Blueprint $table) {
             $table->id();
+            $table->time('time_in')->nullable();
+            $table->time('time_out')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

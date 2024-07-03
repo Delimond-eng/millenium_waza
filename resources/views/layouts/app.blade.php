@@ -1,51 +1,69 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr"  style="--primary-rgb: 14, 107, 230;" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="light" data-toggled="close">
-
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Gaston delimond By - Millenium Horizon ">
 
-    <!-- META DATA eta Data -->
-    <meta charset="UTF-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="Description" content="RH Management application">
-    <meta name="Author" content="Dev.Gaston Delimond">
-    <meta name="keywords" content="IT Developer, Freelance developer, ">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>waza + {{ $title }}</title>
 
-    <!-- TITLE -->
-    <title> Millenium Pay </title>
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
 
-    <!-- FAVICON -->
-    <link rel="icon" href="{{asset('assets/images/brand-logos/favicon.ico')}}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
-    <!-- BOOTSTRAP CSS -->
-    <link id="style" href="{{asset('assets/libs/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
-    <!-- ICONS CSS -->
-    <link href="{{asset('assets/icon-fonts/icons.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}">
 
-    <!-- APP SCSS -->
-    <link rel="preload" as="style" href="{{asset('assets/css/app.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/app.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/feather/feather.css') }}">
 
-    <!-- MAIN JS -->
-    <script src="{{asset('assets/authentication-main.js')}}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datetimepicker.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/datatables.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    @yield('styles')
+
+    <script src="{{ asset('assets/js/layout.js') }}" type="text/javascript"></script>
 </head>
 
 <body>
 
+    <div class="main-wrapper">
+        {{--  HEADER  --}}
+        @include('components.header')
+        {{--  END HEADER  --}}
 
+        {{--  SIDEBAR  --}}
+        @include('components.sidebar')
+        {{--  END SIDEBAR   --}}
 
-@yield('content')
+        {{--  MAIN CONTENT PAGES  --}}
+        <div class="page-wrapper">
+            @yield('content')
+        </div>
+        {{--  END MAIN CONTENT PAGES  --}}
+    </div>
 
-
-<!-- BOOTSTRAP JS -->
-<script src="{{asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-<!-- SECTION SCRIPTS -->
-@yield('scripts')
-<!-- END SECTION SCRIPTS -->
-<!-- END SCRIPTS -->
+    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/moment/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/apexchart/apexcharts.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/apexchart/chart-data.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/theme-settings.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/greedynav.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/script.js') }}" type="text/javascript"></script>
+    @yield('scripts')
 </body>
 
 

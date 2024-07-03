@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('nature_acteurs', function (Blueprint $table) {
             $table->id();
+            $table->string('type_acteur');
+            $table->string('libelle');
+            $table->string('status')->default('actif');
             $table->timestamps();
         });
     }

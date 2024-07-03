@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
+            $table->string('libelle');
+            $table->string('date_debut');
+            $table->string('date_fin');
+            $table->string('status')->default('actif');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('job_id');
             $table->timestamps();
         });
     }

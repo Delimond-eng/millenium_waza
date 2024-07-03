@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('evolution_missions', function (Blueprint $table) {
             $table->id();
+            $table->string('status')->default('actif');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('phase_id');
             $table->timestamps();
         });
     }

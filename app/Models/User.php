@@ -22,9 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
-        'role_key',
-        'role_key_id'
+        'phone',
+        'matricule',
+        'role_id'
     ];
 
     /**
@@ -46,12 +46,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The method
-     * @return BelongsTo
-    */
-    public function parent()
-    {
-       return null;
-    }
 }

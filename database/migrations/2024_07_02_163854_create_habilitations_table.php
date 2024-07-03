@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('habilitations', function (Blueprint $table) {
             $table->id();
+            $table->string('libelle');
+            $table->string('status')->default('actif');
+            $table->unsignedBigInteger('menu_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }
