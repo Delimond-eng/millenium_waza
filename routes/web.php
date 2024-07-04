@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\SettingsController;
+
 use App\Models\Fonction;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -15,19 +15,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//All settings routes
+include __DIR__."/settings/routes.php";
+
+
 Route::get("/", function () {
     return view("dashboard", [
         "title"=>"Dashboard"
     ]);
 });
 
+
 Route::get("/settings.fonctions", function () {
-    $fonctions = Fonction::where("status", "actif")->get();
     return view("pages.settings.fonctions", [
         "title" => "settings fonctions",
-        "fonctions"=>$fonctions
     ]);
-})->name("settings.fonctions");
-
-//Route pour creer une fonctions
-Route::post("/settings.fonctions.create", [SettingsController::class, 'createFonctions'])->name("settings.fonctions.create");
+});

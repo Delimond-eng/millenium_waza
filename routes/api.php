@@ -35,7 +35,6 @@ use Illuminate\Support\Facades\Route;
         return $phoneNumber;
     }
 
-Route::post("/millenium.pay.make", [PaymentController::class, 'makePayment']);
 
 
 

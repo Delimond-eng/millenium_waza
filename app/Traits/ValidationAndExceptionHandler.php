@@ -8,7 +8,7 @@ use Illuminate\Validation\ValidationException;
 
 trait ValidationAndExceptionHandler
 {
-    public function validateAndHandle(Request $request, array $rules, string $route, callable $callback)
+    public function validateAndHandle(Request $request, array $rules, callable $callback)
     {
         try {
             // Validation des données
@@ -17,17 +17,18 @@ trait ValidationAndExceptionHandler
             $result = $callback($data);
 
             // Redirection en cas de succès
-            return redirect()->route($route)->with([
-                "title" => $route,
-                "result" => $result
-            ]);
+            return response()->json(["result"=>$result]);
 
         } catch (\Exception $e) {
             // Redirection en cas d'exception générale
-            return redirect()->route($route)->with([
-                "title"=> $route,
-                "error" => $e->getMessage(),
-            ])->withInput();
+            return response()->json(["error"=>$e->getMessage()]);
+        }
+        catch (ValidationException $e) {
+            $errors = $e->validator->errors()->all();
+            return response()->json(['error' => $errors ]);
+        }
+        catch (\Illuminate\Database\QueryException $e){
+            return response()->json(['error' => $e->getMessage() ]);
         }
     }
 }

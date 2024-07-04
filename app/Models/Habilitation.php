@@ -14,7 +14,7 @@ class Habilitation extends Model
      *
      * @var string
      */
-    protected $table = 'menus';
+    protected $table = 'habilitations';
 
     /**
      * The primary key for the model.

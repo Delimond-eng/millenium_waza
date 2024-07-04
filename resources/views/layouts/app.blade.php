@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="Gaston delimond By - Millenium Horizon ">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>waza + {{ $title }}</title>
 
@@ -49,6 +50,8 @@
         </div>
         {{--  END MAIN CONTENT PAGES  --}}
     </div>
+
+
 
     <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>

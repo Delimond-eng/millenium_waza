@@ -15,7 +15,7 @@ class Transporteur extends Model
      *
      * @var string
      */
-    protected $table = 'clients';
+    protected $table = 'transporteurs';
 
     /**
      * The primary key for the model.

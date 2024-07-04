@@ -23,3 +23,8 @@
     </div>
 </div>
 @endsection
+
+@section("scripts")
+<script type="module" src="{{ asset('assets/js/app/traitment.js') }}"></script>
+@yield("scripts")
+@endsection

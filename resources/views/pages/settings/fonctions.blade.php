@@ -1,26 +1,23 @@
 @extends("layouts.settings")
 
 @section("settingPage")
+<div id="App">
     <div class="card">
         <div class="card-body w-100">
             <div class="content-page-header">
                 <h5>Fonctions</h5>
             </div>
-            <form method="POST" action="{{ route('settings.fonctions.create') }}">
-                 @csrf
-                @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Erreur</strong> {{ session("error") }}
+            <form @submit.prevent="createFonction" method="POST" action="{{ route('fonction.create') }}">
+                @csrf
+                <div v-if="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erreur !</strong> @{{ error }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                @endif
 
-                @if (session('result'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Succès!</strong> Opération effectuée.
+                <div v-else-if="result" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Succès !</strong> Opération effectuée.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                @endif
 
                 <div class="form-group-item">
                     <div class="row">
@@ -52,9 +49,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($fonctions as $fonction)
-                        <tr>
-                            <td>{{ $fonction->libelle }}</td>
+                        <tr v-for="(fonction, index) in fonctions" :key="index">
+                            <td>@{{ fonction.libelle }}</td>
                             <td class="d-flex align-items-center">
                                 <a class="btn btn-greys bg-primary-light me-1" href="#"><i
                                                         class="far fa-edit me-2"></i>Editer</a>
@@ -62,12 +58,18 @@
                                 class="far fa-trash-alt me-2"></i>Supprimer</a>
                             </td>
                         </tr>
-                        @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+</div>
+
+@endsection
+
+@section("scripts")
+    <script src="{{ asset('assets/js/vuejs2.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/app/settings.js') }}"></script>
 @endsection
 

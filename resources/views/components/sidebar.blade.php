@@ -16,7 +16,7 @@
                         <a href="#"><i class="fe fe-grid"></i> <span> Applications</span> <span
                                 class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="chat.html">Chat</a></li>
+                            <li><a href="{{ url("/vuejs") }}">Chat</a></li>
                             <li><a href="calendar.html">Calendar</a></li>
                             <li><a href="inbox.html">Email</a></li>
                         </ul>
@@ -399,7 +399,7 @@
                     <a href="#"><i class="fe fe-grid"></i> <span> Applications</span> <span
                             class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a href="chat.html">Chat</a></li>
+                        <li><a href="{{ url("/vuejs") }}">Vuejs </a></li>
                         <li><a href="calendar.html">Calendar</a></li>
                         <li><a href="inbox.html">Email</a></li>
                     </ul>
