@@ -56,7 +56,7 @@
                 </span>
                 <span class="user-content">
 <span class="user-details">Admin</span>
-                <span class="user-name">LIONNEL NAWEJ</span>
+                <span class="user-name">{{ Auth::user()->name }}</span>
                 </span>
             </a>
             <div class="dropdown-menu menu-drop-user">
@@ -71,10 +71,15 @@
                             </li>
                         </ul>
                     </div>
+
                     <div class="subscription-logout">
                         <ul>
                             <li class="pb-0">
-                                <a class="dropdown-item" href="login.html">Deconnexion</a>
+                                <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">
+                                    @csrf
+                                    <button type="submit">Logout</button>
+                                </form>
+                                <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" href="#">Deconnexion</a>
                             </li>
                         </ul>
                     </div>

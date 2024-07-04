@@ -64,7 +64,7 @@ class SettingsController extends Controller
             "user_id"=>"required|int",
         ];
         // Recupere l'ID de l'utilisateur connecté
-        $request->merge(['user_id' => 1]);
+        $request->merge(['user_id' => Auth::id()]);
 
         //Valide,gere les exceptions et traite la requete et renvoie à la view le resultat
         return $this->validateAndHandle($request, $rules,  function($data) {
