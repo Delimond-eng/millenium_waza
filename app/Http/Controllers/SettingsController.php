@@ -9,6 +9,7 @@ use App\Models\Habilitation;
 use App\Models\Job;
 use App\Models\LogFile;
 use App\Models\Menu;
+use App\Models\MoyenExpedition;
 use App\Models\NatureActeur;
 use App\Models\Phase;
 use App\Models\Port;
@@ -75,7 +76,7 @@ class SettingsController extends Controller
      * @return mixed
      */
     public function getAllFonctions(){
-        $fonctions = Fonction::where("status","actif")->get();
+        $fonctions = Fonction::where("status","actif")->orderByDesc("id")->get();
         return response()->json(["fonctions"=> $fonctions]);
     }
 
@@ -437,6 +438,35 @@ class SettingsController extends Controller
         $clients= Client::where("status", "actif")->get();
         return response()->json([
             "clients"=>$clients
+        ]);
+    }
+
+
+      /**
+     * create Moyen expedition
+     * @param Request $request
+     * @return mixed
+    */
+    public function createMoyenExpedition(Request $request){
+        $rules = [
+            'nom' => 'required|string',
+            'user_id' => 'required|int',
+        ];
+        $request->merge(['user_id' => Auth::id()]);
+        return $this->validateAndHandle($request, $rules, function ($data) {
+            return MoyenExpedition::create($data);
+        });
+    }
+
+
+     /**
+     * get All moyens expeditions
+     * @return mixed
+    */
+    public function getAllMoyenExpeditions(){
+        $moyenExpeditions= MoyenExpedition::where("status", "actif")->get();
+        return response()->json([
+            "moyen_expeditions"=>$moyenExpeditions
         ]);
     }
 

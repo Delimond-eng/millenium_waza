@@ -26,10 +26,11 @@ new Vue({
         //cree une fonction dans la base de données de maniere asynchrone et recharge la liste des fonctions
         createFonction(event) {
             const formData = new FormData(event.target);
-            console.log(formData);
             const url = event.target.getAttribute("action");
+            this.isLoading = true;
             post(url, formData)
                 .then(({ data, status }) => {
+                    this.isLoading = false;
                     if (data.error !== undefined) {
                         this.error = data.error;
                     }
@@ -40,6 +41,7 @@ new Vue({
                     }
                 })
                 .catch((err) => {
+                    this.isLoading = false;
                     this.error = err;
                 });
         },

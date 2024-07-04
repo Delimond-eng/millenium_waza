@@ -72,3 +72,8 @@ Route::post('/job.create', [SettingsController::class, 'createJob'])->name("job.
 Route::get('/clients', [SettingsController::class, 'getAllClients'])->name('clients');
 //CREATE SITE
 Route::post('/client.create', [SettingsController::class, 'createClient'])->name("client.create");
+
+//GET MOYEN EXPORTATION LIST
+Route::get('/moyen_expeditions', [SettingsController::class, 'getAllMoyenExpeditions'])->name('clients');
+//CREATE MOYEN EXPORTATION
+Route::post('/moyen_expedition.create', [SettingsController::class, 'createMoyenExpedition'])->name("moyen_expedition.create");

@@ -32,7 +32,7 @@
                 <div class="col-lg-12">
                     <div class="btn-path text-end">
                         <button type="reset" class="btn btn-cancel bg-primary-light me-3">Annuler</button>
-                        <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                        <button type="submit" class="btn btn-primary" :disabled="isLoading"><span v-if="isLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>Sauvegarder</button>
                     </div>
                 </div>
             </form>
@@ -65,7 +65,6 @@
     </div>
 
 </div>
-
 @endsection
 
 @section("scripts")

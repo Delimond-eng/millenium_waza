@@ -36,7 +36,6 @@ return new class extends Migration
             $table->unsignedBigInteger("transporteur_id");
             $table->unsignedBigInteger("moyen_expedition_id");
             $table->unsignedBigInteger("client_id");
-            $table->unsignedBigInteger("exportation_id");
             $table->timestamps();
         });
     }

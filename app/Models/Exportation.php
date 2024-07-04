@@ -36,14 +36,12 @@ class Exportation extends Model
         'poids_kg',
         'lieu_livraison',
         'date_livraison',
-        'status',
         'observation',
         'user_id',
         'fournisseur_id',
         'transporteur_id',
         'moyen_expodition_id',
         'client_id',
-        'exportation_id',
     ];
 
     /**
