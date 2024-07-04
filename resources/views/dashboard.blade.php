@@ -1,6 +1,299 @@
 @extends('layouts.app')
 @section('content')
-    <div class="content container-fluid pb-0">
+
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex">
+            <div class="card inovices-card w-100">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="inovices-widget-icon bg-info-light">
+                            <img src="assets/img/icons/receipt-item.svg" alt="invoice">
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Total Importation</div>
+                            <div class="dash-counts">
+                                <p>298</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="inovices-all">En cours <span class="rounded-circle bg-light-gray">02</span></p>
+                        <p class="inovice-trending text-success-light">02 <span class="ms-2"><i class="fe fe-trending-up"></i></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex">
+            <div class="card inovices-card w-100">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="inovices-widget-icon bg-primary-light">
+                            <img src="assets/img/icons/transaction-minus.svg" alt="invoice">
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Total exportation</div>
+                            <div class="dash-counts">
+                                <p>325</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="inovices-all">En cours <span class="rounded-circle bg-light-gray">03</span></p>
+                        <p class="inovice-trending text-success-light">04 <span class="ms-2"><i class="fe fe-trending-up"></i></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex">
+            <div class="card inovices-card w-100">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="inovices-widget-icon bg-warning-light">
+                            <img src="assets/img/icons/archive-book.svg" alt="archivebook">
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Total Mission</div>
+                            <div class="dash-counts">
+                                <p>50</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="inovices-all">En cours <span class="rounded-circle bg-light-gray">01</span></p>
+                        <p class="inovice-trending text-danger-light">03 <span class="ms-2"><i class="fe fe-trending-down"></i></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex">
+            <div class="card inovices-card w-100">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="inovices-widget-icon bg-primary-light">
+                            <img src="assets/img/icons/clipboard-close.svg" alt="clipboard">
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Total transporteur</div>
+                            <div class="dash-counts">
+                                <p>100</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="inovices-all">En cours <span class="rounded-circle bg-light-gray">04</span></p>
+                        <p class="inovice-trending text-danger-light">05 <span class="ms-2"><i class="fe fe-trending-down"></i></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex">
+            <div class="card inovices-card w-100">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="inovices-widget-icon bg-green-light">
+                            <img src="assets/img/icons/message-edit.svg" alt="message">
+                        </span>
+                        <div class="dash-count">
+                            <div class="dash-title">Total Port</div>
+                            <div class="dash-counts">
+                                <p>5</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="inovices-all">En cours <span class="rounded-circle bg-light-gray">06</span></p>
+                        <p class="inovice-trending text-danger-light">02 <span class="ms-2"><i class="fe fe-trending-down"></i></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex">
+            <div class="card inovices-card w-100">
+                <div class="card-body">
+                    <div class="dash-widget-header">
+                        <span class="inovices-widget-icon bg-danger-light">
+<img src="assets/img/icons/3d-rotate.svg" alt="invoice">
+</span>
+                        <div class="dash-count">
+                            <div class="dash-title">Total Clients </div>
+                            <div class="dash-counts">
+                                <p>86</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="inovices-all">En cours <span class="rounded-circle bg-light-gray">03</span></p>
+                        <p class="inovice-trending text-success-light">02 <span class="ms-2"><i class="fe fe-trending-up"></i></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <div class="card mb-0">
+                <div class="card-header">
+                    <div class="row align-center">
+                        <div class="col">
+                            <h5 class="card-title">DERNIERE CONNEXION DES USERS </h5>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" class="btn-right btn btn-sm btn-outline-primary">
+View All
+</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-stripped table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Noms</th>
+                                    <th>Fonction</th>
+                                    <th>Heure & Date</th>
+
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                    <td>GASTON DELIMOND</td>
+                                    <td>Technicien</td>
+                                    <td><span class="badge bg-success-light">04/07/2024 11h13</span></td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="edit-invoice.html"><i class="far fa-edit me-2"></i>Edit</a>
+                                                <a class="dropdown-item" href="invoice-details.html"><i class="far fa-eye me-2"></i>Voir Mission</a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+
+                                    <td>MABUKI LEBO </td>
+                                    <td>Technicien</td>
+                                    <td><span class="badge bg-success-light">04/07/2024 10h13</span></td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="edit-invoice.html"><i class="far fa-edit me-2"></i>Edit</a>
+                                                <a class="dropdown-item" href="invoice-details.html"><i class="far fa-eye me-2"></i>Voir Mission</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="card mb-0">
+                <div class="card-header">
+                    <div class="row align-center">
+                        <div class="col">
+                            <h5 class="card-title">ETATS DES MISSIONS</h5>
+                        </div>
+                        <div class="col-auto">
+                            <a href="invoice-details.html" class="btn-right btn btn-sm btn-outline-primary">
+View All
+</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="progress progress-md rounded-pill mb-3">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 39%" aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 26%" aria-valuenow="26" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <i class="fas fa-circle text-success me-1"></i> Mission accomplie
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-circle text-warning me-1"></i> Mission en cours
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-circle text-danger me-1"></i> Mission expirée
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Mission</th>
+                                    <th>Executant</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Déchargement conteneur
+                                    </td>
+                                    <td>DELIMOND</td>
+                                    <td>04/07/2024</td>
+                                    <td><span class="badge bg-warning-light text-warning">En cours</span></td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="edit-invoice.html"><i class="far fa-edit me-2"></i>Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0);"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                                <a class="dropdown-item" href="invoice-details.html"><i class="far fa-eye me-2"></i>Voir plus</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Chargement conteneur
+                                    </td>
+                                    <td>DELIMOND</td>
+                                    <td>04/07/2024</td>
+                                    <td><span class="badge bg-success-light">Fait</span></td>
+                                    <td class="text-end">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="edit-invoice.html"><i class="far fa-edit me-2"></i>Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0);"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                                <a class="dropdown-item" href="invoice-details.html"><i class="far fa-eye me-2"></i>Voir plus</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {{-- <div class="content container-fluid pb-0">
         <div class="page-header">
             <div class="content-page-header">
                 <h5>Dashboard</h5>
@@ -634,7 +927,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('fonctions', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
+            $table->string('description')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->string('status')->default('actif');
             $table->timestamps();

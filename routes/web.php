@@ -52,4 +52,10 @@ Route::get("/settings.fonctions", function () {
     return view("pages.settings.fonctions", [
         "title" => "settings fonctions",
     ]);
-});
+})->name("settings.fonctions");
+
+Route::get("/settings.users", function () {
+    return view("pages.settings.users", [
+        "title" => "settings users",
+    ]);
+})->name("settings.fonctions");

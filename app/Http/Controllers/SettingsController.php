@@ -60,6 +60,7 @@ class SettingsController extends Controller
     {
         $rules = [
             "libelle" => "required|string|unique:fonctions,libelle",
+            "description"=>"nullable|string",
             "user_id"=>"required|int",
         ];
         // Recupere l'ID de l'utilisateur connecté

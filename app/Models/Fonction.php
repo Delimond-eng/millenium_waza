@@ -31,6 +31,7 @@ class Fonction extends Model
      */
     protected $fillable = [
         'libelle',
+        'description',
         'user_id'
     ];
 

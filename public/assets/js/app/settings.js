@@ -38,6 +38,9 @@ new Vue({
                         this.result = data.result;
                         this.loadFonctions();
                         event.target.reset();
+                        setTimeout(() => {
+                            $('#fonction_modal').modal('hide');
+                        }, 500)
                     }
                 })
                 .catch((err) => {
