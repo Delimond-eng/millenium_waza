@@ -62,4 +62,28 @@ Route::middleware(['auth'])->group(function () {
             "title" => "settings users",
         ]);
     })->name("settings.fonctions");
+
+     //Setting nature job Route
+     Route::get("/settings.naturejob", function () {
+        return view("pages.settings.naturejob", [
+            "title" => "settings naturejob",
+        ]);
+    })->name("settings.fonctions");
+
+     //Setting  job Route
+     Route::get("/settings.job", function () {
+        return view("pages.settings.job", [
+            "title" => "settings job",
+        ]);
+    })->name("settings.job");
+
+     //Setting  phase
+     Route::get("/settings.phase", function () {
+        return view("pages.settings.phase", [
+            "title" => "settings phase",
+        ]);
+    })->name("settings.phase");
+
+
+
 });

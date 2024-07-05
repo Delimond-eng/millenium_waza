@@ -11,6 +11,7 @@ use App\Models\LogFile;
 use App\Models\Menu;
 use App\Models\MoyenExpedition;
 use App\Models\NatureActeur;
+use App\Models\NatureJob;
 use App\Models\Phase;
 use App\Models\Port;
 use App\Models\PortDestination;
@@ -184,7 +185,29 @@ class SettingsController extends Controller
         $roles = Role::where("status", "actif")->get();
         return response()->json(["roles" => $roles]);
     }
-
+      /**
+     * Create Nature job
+     * @param Request $request
+    */
+    public function createNatureJob(Request $request){
+        $rules = [
+            "libelle" => "required|string",
+            "description"=>"nullable|string",
+            "user_id"=>"required|int",
+        ];
+        $request->merge(['user_id' => Auth::id()]);
+         return $this->validateAndHandle($request, $rules, function ($data) {
+            return NatureJob::create($data);
+        });
+    }
+    /**
+     * Get all Nature Job
+     * @return mixed
+    */
+    public function getAllNatureJob(){
+        $natureJobs = NatureJob::where("status", "actif")->get();
+        return response()->json(["nature_jobs"=>$natureJobs]);
+    }
     /**
      * Create Nature Acteur
      * @param Request $request
@@ -200,6 +223,7 @@ class SettingsController extends Controller
             return NatureActeur::create($data);
         });
     }
+
 
     /**
      * Get all Nature Acteur
@@ -231,7 +255,7 @@ class SettingsController extends Controller
      * @return mixed
     */
     public function getAllPhases(){
-        $phases = Phase::where("status", "actif")->get();
+        $phases = Phase::with("job")-> where("status", "actif")->get();
         return response()->json(["phases" => $phases]);
     }
 
@@ -397,6 +421,8 @@ class SettingsController extends Controller
         $rules = [
             'libelle' => 'required|string',
             'user_id' => 'required|int',
+            'nature_job_id' => 'required|int',
+            "description"=>"nullable|string",
         ];
         $request->merge(['user_id' => Auth::id()]);
         return $this->validateAndHandle($request, $rules, function ($data) {
@@ -409,7 +435,7 @@ class SettingsController extends Controller
      * @return mixed
     */
     public function getAllJobs(){
-        $jobs = Job::orderByDesc('id')->get();
+        $jobs = Job::with("nature_job")->orderByDesc('id')->get();
         return response()->json([
             "jobs"=>$jobs
         ]);

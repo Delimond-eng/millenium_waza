@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('nature_job', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('nature_job_id');
             $table->string('description')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->string('status')->default('actif');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('fonctions');
     }
 };

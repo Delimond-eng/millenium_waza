@@ -7,14 +7,54 @@ new Vue({
             result: null,
             isLoading: false,
             fonctions: [],
+            nature_jobs: [],
+            jobs: [],
+            phases: [],
         };
     },
     //le hook pour effectuer une operation lorsque la page se lance
     async mounted() {
         await this.loadFonctions();
+        await this.loadNatureJob();
+        await this.loadJob();
+        await this.loadPhase();
     },
-
     methods: {
+        //charge la liste de toutes les natures jobs
+        loadNatureJob() {
+            get("/nature_jobs")
+                .then((res) => {
+                    this.nature_jobs = res.data.nature_jobs;
+                })
+                .catch((err) => console.log("error"));
+        },
+
+        //Creation de la nature job
+        createNatureJob(event) {
+            const formData = new FormData(event.target);
+            const url = event.target.getAttribute("action");
+            this.isLoading = true;
+            post(url, formData)
+                .then(({ data, status }) => {
+                    this.isLoading = false;
+                    if (data.error !== undefined) {
+                        this.error = data.error;
+                    }
+                    if (data.result !== undefined) {
+                        this.result = data.result;
+                        this.loadNatureJob();
+                        event.target.reset();
+                        setTimeout(() => {
+                            $('#naturejob_modal').modal('hide');
+                        }, 500)
+                    }
+                })
+                .catch((err) => {
+                    this.isLoading = false;
+                    this.error = err;
+                });
+        },
+
         //charge la liste de toutes les fonctions
         loadFonctions() {
             get("/fonctions")
@@ -48,5 +88,75 @@ new Vue({
                     this.error = err;
                 });
         },
+        //charge la liste de tous les jobs
+        loadJob() {
+            get("/jobs")
+                .then((res) => {
+                    this.jobs = res.data.jobs;
+                })
+                .catch((err) => console.log("error"));
+        },
+        //cree un job dans la base de données de maniere asynchrone et recharge la liste des fonctions
+        createJob(event) {
+            const formData = new FormData(event.target);
+            const url = event.target.getAttribute("action");
+            this.isLoading = true;
+            post(url, formData)
+                .then(({ data, status }) => {
+                    this.isLoading = false;
+                    if (data.error !== undefined) {
+                        this.error = data.error;
+                    }
+                    if (data.result !== undefined) {
+                        this.result = data.result;
+                        this.loadJob();
+                        event.target.reset();
+                        /*
+                        setTimeout(() => {
+                            $('#job_modal').modal('hide');
+                        }, 500)*/
+                    }
+                })
+                .catch((err) => {
+                    this.isLoading = false;
+                    this.error = err;
+                });
+        },
+        //charge la liste de toutes les phases
+        loadPhase() {
+            get("/phases")
+                .then((res) => {
+                    // console.log(JSON.stringify(res.data.phases));
+                    this.phases = res.data.phases;
+                })
+                .catch((err) => console.log("error"));
+        },
+        //cree les phases dans la base de données de maniere asynchrone et recharge la liste des fonctions
+        createPhase(event) {
+            const formData = new FormData(event.target);
+            const url = event.target.getAttribute("action");
+            this.isLoading = true;
+            post(url, formData)
+                .then(({ data, status }) => {
+                    this.isLoading = false;
+                    if (data.error !== undefined) {
+                        this.error = data.error;
+                    }
+                    if (data.result !== undefined) {
+                        this.result = data.result;
+                        this.loadPhase();
+                        event.target.reset();
+                        /*
+                        setTimeout(() => {
+                            $('#job_modal').modal('hide');
+                        }, 500)*/
+                    }
+                })
+                .catch((err) => {
+                    this.isLoading = false;
+                    this.error = err;
+                });
+        },
+
     },
 });

@@ -30,8 +30,14 @@ Route::post('/role.create', [SettingsController::class, 'createRole'])->name("ro
 
 //GET NATURE ACTEUR LIST
 Route::get('/nature_acteurs', [SettingsController::class, 'getAllNatureActeurs'])->name('nature_acteurs');
+//GET NATURE JOB
+Route::get('/nature_jobs', [SettingsController::class, 'getAllNatureJob'])->name('nature_jobs');
+
+
 //CREATE ROLE
 Route::post('/nature_acteur.create', [SettingsController::class, 'createNatureActeur'])->name("nature_acteur.create");
+//CREATE Nature job
+Route::post('/nature_job.create', [SettingsController::class, 'createNatureJob'])->name("nature_job.create");
 
 //GET PHASE LIST
 Route::get('/phases', [SettingsController::class, 'getAllPhases'])->name('phases');

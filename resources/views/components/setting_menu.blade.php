@@ -36,7 +36,21 @@
                 <i class="fe fe-layers"></i> <span>Moyen d'expedition</span>
             </a>
         </li>
-
+        <li class="nav-item">
+            <a href="{{ url('/settings.naturejob') }}" class="nav-link {{ request()->is("settings.naturejob") ? "active": "" }}">
+                <i class="fe fe-layout"></i> <span>Nature job(services)</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url('/settings.job') }}" class="nav-link {{ request()->is("settings.job") ? "active": "" }}">
+                <i class="fe fe-grid"></i> <span>Job(sous-service)</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url('/settings.phase') }}" class="nav-link {{ request()->is("settings.phase") ? "active": "" }}">
+                <i class="fe fe-menu"></i> <span>Phases</span>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="mission-setting.html" class="nav-link">
                 <i class="fe fe-aperture"></i> <span>Missions</span>

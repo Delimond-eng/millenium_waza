@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Job extends Model
+class NatureJob extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Job extends Model
      *
      * @var string
      */
-    protected $table = 'jobs';
+    protected $table = 'nature_job';
 
     /**
      * The primary key for the model.
@@ -31,9 +31,8 @@ class Job extends Model
      */
     protected $fillable = [
         'libelle',
-        'user_id',
-        'nature_job_id',
         'description',
+        'user_id'
     ];
 
     /**
@@ -74,8 +73,4 @@ class Job extends Model
         return $this->belongsTo(User::class, foreignKey:'user_id');
     }
 
-
-    public function nature_job(){
-        return $this->belongsTo(NatureJob::class, foreignKey:'nature_job_id');
-    }
 }
