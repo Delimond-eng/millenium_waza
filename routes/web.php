@@ -70,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
         ]);
     })->name("settings.fonctions");
 
-     //Setting  job Route
+     //Setting job Route
      Route::get("/settings.job", function () {
         return view("pages.settings.job", [
             "title" => "settings job",
