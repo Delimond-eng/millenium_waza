@@ -16,7 +16,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="role-settings.html" class="nav-link">
+            <a href="{{ url('settings.roles') }}" class="nav-link">
                 <i class="fe fe-credit-card"></i> <span>Roles</span>
             </a>
         </li>

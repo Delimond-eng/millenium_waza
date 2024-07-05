@@ -14,21 +14,6 @@
                         <div class="list-btn">
                             <ul class="filter-list">
                                 <li>
-                                    <div class="short-filter">
-                                        <img class="me-2" src="assets/img/icons/sort.svg" alt="Sort by select">
-                                        <div class="sort-by sort-by-ticket">
-                                            <select class="sort select">
-                                            <option>Sort by: Date</option>
-                                            <option>Sort by: Date 1</option>
-                                            <option>Sort by: Date 2</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="btn btn-filters w-auto popup-toggle" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Filter"><span class="me-2"><img src="assets/img/icons/filter-icon.svg" alt="filter"></span>Filter </a>
-                                </li>
-                                <li>
                                     <a class="btn btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#add_role"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>+ Roles</a>
                                 </li>
                             </ul>
@@ -44,49 +29,21 @@
                                     <table class="table table-center table-hover datatable">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>ID</th>
+                                                <th>#</th>
                                                 <th>Libellé role</th>
-                                                <th>Crée le</th>
                                                 <th Class="no-sort">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Admin</td>
-                                                <td>19 Dec 2023, 06:12 PM</td>
+                                            <tr v-for="(role, index) in roles" :key="index">
+                                                <td>@{{ index+1 }}</td>
+                                                <td>@{{ role.libelle }}</td>
                                                 <td class="d-flex align-items-center">
                                                     <a href="#" class="btn btn-greys me-2" data-bs-toggle="modal" data-bs-target="#edit_role"><i class="fa fa-edit me-1"></i> Edit Role</a>
                                                     <a href="permission-settings.html" class="btn btn-greys me-2"><i class="fa fa-shield me-1"></i> Permissions</a>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Super Admin </td>
-                                                <td>28 Nov 2023, 03:25 PM</td>
-                                                <td class="d-flex align-items-center">
-                                                    <a href="#" class="btn btn-greys me-2" data-bs-toggle="modal" data-bs-target="#edit_role"><i class="fa fa-edit me-1"></i> Edit Role</a>
-                                                    <a href="permission-settings.html" class="btn btn-greys me-2"><i class="fa fa-shield me-1"></i> Permissions</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Financier</td>
-                                                <td>19 Dec 2023, 06:12 PM</td>
-                                                <td class="d-flex align-items-center">
-                                                    <a href="#" class="btn btn-greys me-2" data-bs-toggle="modal" data-bs-target="#edit_role"><i class="fa fa-edit me-1"></i> Edit Role</a>
-                                                    <a href="permission-settings.html" class="btn btn-greys me-2"><i class="fa fa-shield me-1"></i> Permissions</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Receptionniste</td>
-                                                <td>9 Dec 2023, 06:12 PM</td>
-                                                <td class="d-flex align-items-center">
-                                                    <a href="#" class="btn btn-greys me-2" data-bs-toggle="modal" data-bs-target="#edit_role"><i class="fa fa-edit me-1"></i> Edit Role</a>
-                                                    <a href="permission-settings.html" class="btn btn-greys me-2"><i class="fa fa-shield me-1"></i> Permissions</a>
-                                                </td>
-                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -131,22 +88,32 @@
                         <h4 class="mb-0">Ajouter un role</h4>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-    </button>
+                    </button>
                 </div>
-                <form action="#">
+                <form @submit.prevent="createRole" method="POST" action="{{ route('role.create') }}">
+                    @csrf
                     <div class="modal-body">
+                        <div v-if="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Erreur!</strong> @{{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <div v-else-if="result" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Succès!</strong> Opération effectué avec succès !
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <div class="input-block mb-0">
                                     <label>Nom du role <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Entrer le role">
+                                    <input type="text" name="libelle" class="form-control" placeholder="Entrer le libellé du rôle...">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-bs-dismiss="modal" class="btn btn-back cancel-btn me-2">Annuler</button>
-                        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary paid-continue-btn">Enregistrer</button>
+                        <button type="reset" data-bs-dismiss="modal" class="btn btn-back cancel-btn me-2">Annuler</button>
+                        <button type="submit" :disabled="isLoading" class="btn btn-primary paid-continue-btn"><span v-if="isLoading" class="spinner-border spinner-border-sm me-2"></span> Enregistrer</button>
                     </div>
                 </form>
             </div>

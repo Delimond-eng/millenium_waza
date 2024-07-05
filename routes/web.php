@@ -21,6 +21,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
 
+    //Home Dashboard route
+    Route::get("/", function () {
+        return view("dashboard", [
+            "title"=>"Dashboard"
+        ]);
+    });
+
     //All settings routes
     include __DIR__."/settings/routes.php";
 
@@ -42,12 +49,7 @@ Route::middleware(['auth'])->group(function () {
     //CREATE NEW IMPORTATION
     Route::post("/exportation.create", [ImportExportController::class, "createExportation"])->name("exportation.create");
 
-    //Home Dashboard route
-    Route::get("/", function () {
-        return view("dashboard", [
-            "title"=>"Dashboard"
-        ]);
-    });
+
 
     //Setting fonction Route
     Route::get("/settings.fonctions", function () {
@@ -56,12 +58,19 @@ Route::middleware(['auth'])->group(function () {
         ]);
     })->name("settings.fonctions");
 
-    //Setting user routes
+    //Setting user route
     Route::get("/settings.users", function () {
         return view("pages.settings.users", [
             "title" => "settings users",
         ]);
     })->name("settings.fonctions");
+
+    //Setting role route
+    Route::get("/settings.roles", function () {
+        return view("pages.settings.roles", [
+            "title" => "settings roles",
+        ]);
+    })->name("settings.roles");
 
      //Setting nature job Route
      Route::get("/settings.naturejob", function () {

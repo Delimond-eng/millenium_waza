@@ -10,6 +10,7 @@ new Vue({
             nature_jobs: [],
             jobs: [],
             phases: [],
+            roles: [],
         };
     },
     //le hook pour effectuer une operation lorsque la page se lance
@@ -18,8 +19,73 @@ new Vue({
         await this.loadNatureJob();
         await this.loadJob();
         await this.loadPhase();
+        await this.loadRoles();
     },
     methods: {
+        //Chargements des roles
+        loadRoles() {
+            get("/roles")
+                .then((res) => {
+                    this.roles = res.data.roles;
+                })
+                .catch((err) => console.log("error"));
+        },
+
+        //Create new role
+        createRole(event) {
+            const formData = new FormData(event.target);
+            const url = event.target.getAttribute("action");
+            this.isLoading = true;
+            post(url, formData)
+                .then(({ data, status }) => {
+                    this.isLoading = false;
+                    if (data.error !== undefined) {
+                        this.error = data.error;
+                    }
+                    if (data.result !== undefined) {
+                        this.result = data.result;
+                        this.loadRoles();
+                        event.target.reset();
+                        setTimeout(() => {
+                            $("#add_role").modal("hide");
+                        }, 500);
+                    }
+                })
+                .catch((err) => {
+                    this.isLoading = false;
+                    this.error = err;
+                });
+        },
+
+        //create User
+        createUser(event) {
+            const password = event.target["password"].value;
+            const confirm = event.target["confirm"].value;
+            console.log(event.target["role_id"].value);
+            if (password !== confirm) {
+                this.error = "Echec de confirmation du mot de passe !";
+                return;
+            }
+            const formData = new FormData(event.target);
+            const url = event.target.getAttribute("action");
+            this.isLoading = true;
+            post(url, formData)
+                .then(({ data, status }) => {
+                    this.isLoading = false;
+                    if (data.error !== undefined) {
+                        this.error = data.error;
+                    }
+                    if (data.result !== undefined) {
+                        this.result = data.result;
+                        event.target.reset();
+                    }
+                })
+                .catch((err) => {
+                    this.isLoading = false;
+                    this.error = err;
+                });
+        },
+
         //charge la liste de toutes les natures jobs
         loadNatureJob() {
             get("/nature_jobs")
