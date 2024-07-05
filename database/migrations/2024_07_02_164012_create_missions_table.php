@@ -19,8 +19,11 @@ return new class extends Migration
             $table->string('date_debut');
             $table->string('date_fin');
             $table->string('status')->default('actif');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->comment('session user');
+            $table->unsignedBigInteger('manager_id')->comment('user that manage mission');
+            $table->unsignedBigInteger('collaborateur_id')->comment('user that execute mission');
             $table->unsignedBigInteger('job_id');
+            $table->unsignedBigInteger('client_id')->nullable();
             $table->timestamps();
         });
     }

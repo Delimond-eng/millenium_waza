@@ -33,8 +33,11 @@ class Mission extends Model
         'libelle',
         'date_debut',
         'date_fin',
-        'user_id',
+        'client_id',
         'job_id',
+        'manager_id',
+        'collaborateur_id',
+        'user_id',
     ];
 
     /**

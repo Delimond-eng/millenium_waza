@@ -435,7 +435,7 @@ class SettingsController extends Controller
      * @return mixed
     */
     public function getAllJobs(){
-        $jobs = Job::with("nature_job")->orderByDesc('id')->get();
+        $jobs = Job::with("nature_job")->with("phases")->orderByDesc('id')->get();
         return response()->json([
             "jobs"=>$jobs
         ]);

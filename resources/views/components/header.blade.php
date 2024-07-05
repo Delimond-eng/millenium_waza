@@ -55,7 +55,7 @@
 <span class="animate-circle"></span>
                 </span>
                 <span class="user-content">
-<span class="user-details">Admin</span>
+<span class="user-details">Admin {{ Auth::user()->role_id }}</span>
                 <span class="user-name">{{ Auth::user()->name }}</span>
                 </span>
             </a>

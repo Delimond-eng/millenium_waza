@@ -1,4 +1,4 @@
-import {get, post } from "./http.js";
+import { get, post } from "./http.js";
 new Vue({
     el: "#App",
     data() {
@@ -45,8 +45,8 @@ new Vue({
                         this.loadNatureJob();
                         event.target.reset();
                         setTimeout(() => {
-                            $('#naturejob_modal').modal('hide');
-                        }, 500)
+                            $("#naturejob_modal").modal("hide");
+                        }, 500);
                     }
                 })
                 .catch((err) => {
@@ -79,8 +79,8 @@ new Vue({
                         this.loadFonctions();
                         event.target.reset();
                         setTimeout(() => {
-                            $('#fonction_modal').modal('hide');
-                        }, 500)
+                            $("#fonction_modal").modal("hide");
+                        }, 500);
                     }
                 })
                 .catch((err) => {
@@ -93,6 +93,7 @@ new Vue({
             get("/jobs")
                 .then((res) => {
                     this.jobs = res.data.jobs;
+                    console.log(JSON.stringify(res.data.jobs));
                 })
                 .catch((err) => console.log("error"));
         },
@@ -157,6 +158,5 @@ new Vue({
                     this.error = err;
                 });
         },
-
     },
 });

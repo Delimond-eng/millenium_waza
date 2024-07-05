@@ -16,10 +16,10 @@
                     <div class="card-table">
                         <div class="card-body">
                             <div class="table-responsive no-pagination">
-                                <table class="table table-center table-hover datatable">
+                                <table class="table table-center table-hover datatable dataTable">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>#</th>
+                                            <th> #</th>
                                             <th>Nature job</th>
                                             <th>job</th>
                                             <th>Description</th>
@@ -90,7 +90,8 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="input-block mb-3">
                                 <label>Choisir nature job  <span class="text-danger">*</span></label>
-                                <select class="form-select" name="nature_job_id" id=""  >
+                                <select class="form-select" name="nature_job_id" id="">
+                                    <option value="" hidden selected>Sélectionnez un job...</option>
                                     <option v-for="(n, index) in nature_jobs" :key="index" :value="n.id" >@{{ n.libelle  }}</option>
                                 </select>
                             </div>

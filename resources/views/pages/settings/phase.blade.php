@@ -90,8 +90,9 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="input-block mb-3">
-                                <label>Choisir un service  <span class="text-danger">*</span></label>
-                                <select class="form-select" name="job_id" id=""  >
+                                <label>Choisir un job  <span class="text-danger">*</span></label>
+                                <select class="form-select" name="job_id" id="">
+                                    <option value="" selected hidden>Sélectionnez un job...</option>
                                     <option v-for="(n, index) in jobs" :key="index" :value="n.id" >@{{ n.libelle  }}</option>
                                 </select>
                             </div>

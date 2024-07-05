@@ -23,6 +23,9 @@ class AppController extends Controller
             "date_fin"=> "required|date|after_or_equal:date_debut",
             "user_id"=> "required|int",
             "job_id"=> "required|int|exists:jobs,id",
+            "manager_id"=> "required|int|exists:users,id",
+            "collaborateur_id"=> "required|int|exists:users,id",
+            "client_id"=> "nullable|int|exists:clients,id",
         ];
         //Valide,gere les exceptions et traite la requete et renvoie à la view le resultat
         return $this->validateAndHandle($request, $rules,  function($data) {

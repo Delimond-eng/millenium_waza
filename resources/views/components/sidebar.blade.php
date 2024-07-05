@@ -474,7 +474,7 @@
                     <li class="submenu">
                         <a href="#"><i class="fe fe-home"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="#" class="active">Admin Dashboard</a></li>
+                            <li><a href="{{ url("/") }}" class="active">Admin Dashboard</a></li>
                         </ul>
                     </li>
                     <li class="submenu">
@@ -820,7 +820,7 @@
                 <li class="submenu">
                     <a href="#"><i class="fe fe-home"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a class="active" href="#">Admin Dashboard</a></li>
+                        <li><a class="active" href="{{ url('/') }}">Admin Dashboard</a></li>
                     </ul>
                 </li>
 

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Job extends Model
 {
@@ -70,12 +72,27 @@ class Job extends Model
      * Summary of user
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(){
+    public function user():BelongsTo{
         return $this->belongsTo(User::class, foreignKey:'user_id');
     }
 
 
-    public function nature_job(){
+    /**
+     * Summary of nature_job
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function nature_job():BelongsTo{
         return $this->belongsTo(NatureJob::class, foreignKey:'nature_job_id');
     }
+
+    /**
+     * Summary of phases
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function phases(): HasMany
+    {
+        return $this->hasMany(Phase::class, foreignKey:'job_id', localKey:'id');
+    }
+
+
 }
