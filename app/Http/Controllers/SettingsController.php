@@ -162,6 +162,20 @@ class SettingsController extends Controller
         return response()->json(["users" => $users]);
     }
 
+
+    /**
+     * Get all Users
+     * @return mixed
+    */
+    public function getAllCollaborateurs(){
+        $users = User::with("role")
+            ->with("missions")
+            ->whereNot("status", "deleted")
+            ->whereNot('role_id',1)
+            ->get();
+        return response()->json(["collaborateurs" => $users]);
+    }
+
     /**
      * Create Role
      * @param Request $request

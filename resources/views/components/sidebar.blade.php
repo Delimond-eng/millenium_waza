@@ -835,7 +835,7 @@
                 <li class="submenu">
                     <a href="#" class><i class="fe fe-clipboard"></i> <span> Missions</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="{{ url('/mission') }}">Missions</a></li>
 
                     </ul>
                 </li>

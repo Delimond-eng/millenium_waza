@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 //GET USERS LIST
 Route::get('/users', [SettingsController::class, 'getAllUsers'])->name('users');
+
+Route::get('/collaborateurs', [SettingsController::class, 'getAllCollaborateurs'])->name('users');
 //CREATE USER
 Route::post('/user.create', [SettingsController::class, 'createUser'])->name("user.create");
 

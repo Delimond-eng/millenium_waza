@@ -28,6 +28,13 @@ Route::middleware(['auth'])->group(function () {
         ]);
     });
 
+     //Mission route
+     Route::get("/mission", function () {
+        return view("pages.public.mission", [
+            "title"=>"page mission"
+        ]);
+    });
+
     //All settings routes
     include __DIR__."/settings/routes.php";
 
