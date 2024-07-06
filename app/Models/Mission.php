@@ -58,8 +58,8 @@ class Mission extends Model
     protected $casts = [
         'created_at'=>'datetime:d/m/Y H:i',
         'updated_at'=>'datetime:d/m/Y H:i',
-        'date_debut'=>'datetime:d/m/Y',
-        'date_fin'=>'datetime:d/m/Y',
+        'date_debut'=>'datetime:Y-m-d',
+        'date_fin'=>'datetime:Y-m-d',
     ];
 
     /**

@@ -11,6 +11,7 @@ new Vue({
             jobs: [],
             clients: [],
             events: [],
+            phases: [],
             form_mission: {
                 libelle: "",
                 date_debut: "",
@@ -22,10 +23,16 @@ new Vue({
             },
             error: null,
             result: null,
+            isLoading: false,
         };
     },
 
     async mounted() {
+        const self = this;
+        let myModal = document.getElementById("mission_modal");
+        myModal.addEventListener("hidden.bs.modal", function () {
+            self.cleanField();
+        });
         await this.loadJobs();
         await this.loadManagers();
         await this.loadCollaborateurs();
@@ -53,6 +60,27 @@ new Vue({
                     this.managers = res.data.users;
                 })
                 .catch((err) => console.log("error"));
+        },
+        onChangeJob(event) {
+            let jobId = parseInt(event.target.value);
+            this.phases = [];
+            this.jobs.forEach((job) => {
+                if (job.id === jobId) {
+                    this.phases = job.phases;
+                }
+            });
+        },
+        cleanField() {
+            this.form_mission.libelle = "";
+            this.form_mission.date_debut = "";
+            this.form_mission.date_fin = "";
+            this.form_mission.client_id = "";
+            this.form_mission.job_id = "";
+            this.form_mission.manager_id = "";
+            this.form_mission.collaborateur_id = "";
+            this.initialStep = 1;
+            this.error = null;
+            this.result = null;
         },
         initCalendar() {
             const self = this;
@@ -213,6 +241,22 @@ new Vue({
             CalendarApp.prototype.init = function () {
                 this.enableDrag();
                 var $this = this;
+                var defaultEvents = self.events.map(function (event) {
+                    var randomClass = [
+                        "bg-purple",
+                        "bg-success",
+                        "bg-info",
+                        "bg-warning",
+                        "bg-primary",
+                    ][Math.floor(Math.random() * 5)];
+                    return {
+                        title: event.libelle,
+                        start: new Date(event.date_debut),
+                        end: new Date(event.date_fin),
+                        className: randomClass, // Example class based on event status
+                        id: event.id, // Optional: event ID
+                    };
+                });
                 $this.$calendarObj = $this.$calendar.fullCalendar({
                     locale: "fr",
                     slotDuration: "00:15:00",
@@ -241,7 +285,7 @@ new Vue({
                         week: "Semaine",
                         day: "Jour",
                     },
-                    events: [],
+                    events: defaultEvents,
                     editable: true,
                     droppable: true,
                     eventLimit: true,
@@ -288,7 +332,6 @@ new Vue({
         loadCollaborateurs() {
             get("/collaborateurs")
                 .then((res) => {
-                    console.log(JSON.stringify(res.data));
                     this.collaborateurs = res.data.collaborateurs;
                 })
                 .catch((err) => console.log("error"));
@@ -325,8 +368,8 @@ new Vue({
             }
         },
 
-        submitData() {
-            const formData = new FormData(this.form_mission);
+        submitData(event) {
+            const formData = new FormData();
             formData.append("libelle", this.form_mission.libelle);
             formData.append("date_debut", this.form_mission.date_debut);
             formData.append("date_fin", this.form_mission.date_fin);
@@ -337,7 +380,27 @@ new Vue({
                 "collaborateur_id",
                 this.form_mission.collaborateur_id
             );
-            console.log(formData);
+            const url = event.target.getAttribute("action");
+            post(url, formData)
+                .then(({ data, status }) => {
+                    this.isLoading = false;
+                    if (data.error !== undefined) {
+                        this.error = data.error;
+                    }
+                    if (data.result !== undefined) {
+                        this.error = null;
+                        this.result = data.result;
+                        event.target.reset();
+                        this.loadCollaborateurs();
+                        setTimeout(() => {
+                            $("#mission_modal").modal("hide");
+                        }, 1000);
+                    }
+                })
+                .catch((err) => {
+                    this.isLoading = false;
+                    this.error = err;
+                });
         },
     },
 

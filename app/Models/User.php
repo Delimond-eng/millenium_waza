@@ -54,7 +54,7 @@ class User extends Authenticatable
 
 
     public function missions(): HasMany{
-        return $this->hasMany(Mission::class, foreignKey:'user_id', localKey:'id');
+        return $this->hasMany(Mission::class, foreignKey:'collaborateur_id', localKey:'id');
     }
 
 }

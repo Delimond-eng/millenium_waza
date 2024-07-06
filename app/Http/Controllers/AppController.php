@@ -41,7 +41,7 @@ class AppController extends Controller
      */
     public function getAllMissions()
     {
-        $missions = Mission::with("job")->with("user")->where("status", "actif")->get();
+        $missions = Mission::with("job.phases")->with("user")->where("status", "actif")->get();
         return response()->json([
             "missions"=> $missions
         ]);

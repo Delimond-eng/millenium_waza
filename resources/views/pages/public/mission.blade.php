@@ -3,7 +3,6 @@
 
     <div id="App">
         <div class="content container-fluid">
-
             <div class="page-header">
                 <div class="content-page-header">
                     <h5>Attribuer une mission à un collaborateur</h5>
@@ -129,7 +128,8 @@
 
         <div class="modal custom-modal fade" id="mission_modal" role="dialog">
             <div class="modal-dialog modal-dialog-centered" :class="initialStep==2 ? 'modal-lg': 'modal-md'">
-                <div class="modal-content">
+                <form @submit.prevent="submitData" method="POST" action="{{ route("mission.create") }}" class="modal-content">
+                    @csrf
                     <div class="modal-header border-0 pb-0">
                         <div class="form-header modal-header-title text-start mb-0">
                             <h4 class="mb-0">@{{ initialStep }}/@{{ steps }} @{{ stepInfo }}</h4>
@@ -137,13 +137,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
-                    <form @submit.prevent="submitData" method="POST" action="{{ route("mission.create") }}" class="modal-body">
-                        @csrf
+                    <div class="modal-body">
                         <div v-if="error" class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>Erreur!</strong> @{{ error }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-
                         <div v-else-if="result" class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>Succès!</strong> Opération effectué avec succès !
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -183,10 +181,22 @@
                             <div class="col-lg-12 col-md-12">
                                 <div class="input-block mb-3">
                                     <label>Job <span class="text-danger">*</span></label>
-                                    <select class="form-select" v-model="form_mission.job_id" required>
+                                    <select @change="onChangeJob" class="form-select" v-model="form_mission.job_id" required>
                                         <option value="" hidden selected>Sélectionnez un job...</option>
                                         <option v-for="(data, index) in jobs" :value="data.id">@{{ data.libelle }}</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 border-1 border-dark-subtle" v-if="phases.length > 0">
+                                <p class="fw-medium">PHASES</p>
+                                <div class="row">
+                                    <div class="col-lg-4 col-sm-6 col-6" v-for="(data, index) in phases" :key="index">
+                                        <div class="checkboxes">
+                                            <label>
+                                                <input type="checkbox" name="checkbox" checked="" disabled> @{{ data.libelle }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -210,13 +220,13 @@
                             </div>
                         </div>
 
-                    </form>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" @click="goToPrev" v-if="initialStep > 1" class="btn btn-back cancel-btn me-2">Précedent</button>
                         <button type="button"  @click="goToNext" v-if="initialStep < 3"  class="btn btn-primary paid-continue-btn">Suivant <i class="fa fa-angle-double-right me-2" aria-hidden="true"></i></button>
-                        <button type="submit" v-else  class="btn btn-success"> <i class="fa fa-check-double me-2"></i> Sauvegarder</button>
+                        <button :disabled="isLoading" type="submit" v-else  class="btn btn-success"> <span v-if="isLoading" class="spinner-border spinner-border-sm me-2"></span> <i v-else class="fa fa-check-double me-2"></i> Sauvegarder</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
