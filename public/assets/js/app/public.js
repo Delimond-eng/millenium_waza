@@ -1,4 +1,4 @@
-import {get, post } from "./http.js";
+import { get, post } from "./http.js";
 new Vue({
     el: "#App",
 
@@ -6,214 +6,283 @@ new Vue({
         return {
             steps: 3,
             initialStep: 1,
-            collaborateurs: []
-        }
+            collaborateurs: [],
+            managers: [],
+            jobs: [],
+            clients: [],
+            events: [],
+            form_mission: {
+                libelle: "",
+                date_debut: "",
+                date_fin: "",
+                client_id: "",
+                job_id: "",
+                manager_id: "",
+                collaborateur_id: "",
+            },
+            error: null,
+            result: null,
+        };
     },
-
 
     async mounted() {
-
-        this.initCalendar();
+        await this.loadJobs();
+        await this.loadManagers();
         await this.loadCollaborateurs();
-
     },
 
-
     methods: {
+        loadJobs() {
+            get("/jobs")
+                .then((res) => {
+                    this.jobs = res.data.jobs;
+                })
+                .catch((err) => console.log("error"));
+        },
+
+        loadClients() {
+            get("/clients")
+                .then((res) => {
+                    this.clients = res.data.clients;
+                })
+                .catch((err) => console.log("error"));
+        },
+        loadManagers() {
+            get("/users")
+                .then((res) => {
+                    this.managers = res.data.users;
+                })
+                .catch((err) => console.log("error"));
+        },
         initCalendar() {
             const self = this;
-            var CalendarApp = function() {
-                this.$body = $("body")
-                this.$calendar = $("#calendar"),
-                    this.$event = ('#calendar-events div.calendar-events'),
-                    this.$categoryForm = $('#add_new_event form'),
-                    this.$extEvents = $('#calendar-events'),
-                    this.$modal = $('#my_event'),
-                    this.$saveCategoryBtn = $('.save-category'),
-                    this.$calendarObj = null
+            var CalendarApp = function () {
+                this.$body = $("body");
+                (this.$calendar = $("#calendar")),
+                    (this.$event = "#calendar-events div.calendar-events"),
+                    (this.$categoryForm = $("#add_new_event form")),
+                    (this.$extEvents = $("#calendar-events")),
+                    (this.$modal = $("#my_event")),
+                    (this.$saveCategoryBtn = $(".save-category")),
+                    (this.$calendarObj = null);
             };
 
+            /* lors du dépôt */
+            CalendarApp.prototype.onDrop = function (eventObj, date) {
+                var $this = this;
+                var originalEventObject = eventObj.data("eventObject");
+                var $categoryClass = eventObj.attr("data-class");
+                var copiedEventObject = $.extend({}, originalEventObject);
+                copiedEventObject.start = date;
+                if ($categoryClass)
+                    copiedEventObject.className = [$categoryClass];
+                $this.$calendar.fullCalendar(
+                    "renderEvent",
+                    copiedEventObject,
+                    true
+                );
+                if ($("#drop-remove").is(":checked")) {
+                    eventObj.remove();
+                }
+            };
 
-            /* on drop */
-            CalendarApp.prototype.onDrop = function(eventObj, date) {
-                    var $this = this;
-                    // retrieve the dropped element's stored Event Object
-                    var originalEventObject = eventObj.data('eventObject');
-                    var $categoryClass = eventObj.attr('data-class');
-                    // we need to copy it, so that multiple events don't have a reference to the same object
-                    var copiedEventObject = $.extend({}, originalEventObject);
-                    // assign it the date that was reported
-                    copiedEventObject.start = date;
-                    if ($categoryClass)
-                        copiedEventObject['className'] = [$categoryClass];
-                    // render the event on the calendar
-                    $this.$calendar.fullCalendar('renderEvent', copiedEventObject, true);
-                    // is the "remove after drop" checkbox checked?
-                    if ($('#drop-remove').is(':checked')) {
-                        // if so, remove the element from the "Draggable Events" list
-                        eventObj.remove();
-                    }
-                },
-                /* on click on event */
-                CalendarApp.prototype.onEventClick = function(calEvent, jsEvent, view) {
-                    var $this = this;
-                    var form = $("<form></form>");
-                    form.append("<label>Change event name</label>");
-                    form.append("<div class='input-group'><input class='form-control' type=text value='" + calEvent.title + "' /><span class='input-group-addon'><button type='submit' class='btn btn-success'><i class='fas fa-check'></i> Save</button></span></div>");
-                    $this.$modal.modal({
-                        backdrop: 'static'
+            /* lors du clic sur un événement */
+            CalendarApp.prototype.onEventClick = function (
+                calEvent,
+                jsEvent,
+                view
+            ) {
+                var $this = this;
+                var form = $("<form></form>");
+                form.append("<label>Modifier le nom de l'événement</label>");
+                form.append(
+                    "<div class='input-group'><input class='form-control' type=text value='" +
+                        calEvent.title +
+                        "' /><span class='input-group-addon'><button type='submit' class='btn btn-success'><i class='fas fa-check'></i> Sauvegarder</button></span></div>"
+                );
+                $this.$modal.modal({ backdrop: "statique" });
+                $this.$modal
+                    .find(".delete-event")
+                    .show()
+                    .end()
+                    .find(".save-event")
+                    .hide()
+                    .end()
+                    .find(".modal-body")
+                    .empty()
+                    .prepend(form)
+                    .end()
+                    .find(".delete-event")
+                    .unbind("click")
+                    .click(function () {
+                        $this.$calendarObj.fullCalendar(
+                            "removeEvents",
+                            function (ev) {
+                                return ev._id == calEvent._id;
+                            }
+                        );
+                        $this.$modal.modal("hide");
                     });
-                    $this.$modal.find('.delete-event').show().end().find('.save-event').hide().end().find('.modal-body').empty().prepend(form).end().find('.delete-event').unbind('click').click(function() {
-                        $this.$calendarObj.fullCalendar('removeEvents', function(ev) {
-                            return (ev._id == calEvent._id);
-                        });
-                        $this.$modal.modal('hide');
-                    });
-                    $this.$modal.find('form').on('submit', function() {
-                        calEvent.title = form.find("input[type=text]").val();
-                        $this.$calendarObj.fullCalendar('updateEvent', calEvent);
-                        $this.$modal.modal('hide');
-                        return false;
-                    });
-                },
-                /* on select */
-                CalendarApp.prototype.onSelect = function(start, end, allDay) {
-                    var $this = this;
-                    $this.$modal.modal({
-                        backdrop: 'static'
-                    });
-                    var form = $("<form></form>");
-                    form.append("<div class='event-inputs'></div>");
-                    form.find(".event-inputs")
-                        .append("<div class='form-group'><label class='control-label'>Event Name</label><input class='form-control' placeholder='Insert Event Name' type='text' name='title'/></div>")
-                        .append("<div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='category'></select></div>")
-                        .find("select[name='category']")
-                        .append("<option value='bg-danger'>Danger</option>")
-                        .append("<option value='bg-success'>Success</option>")
-                        .append("<option value='bg-purple'>Purple</option>")
-                        .append("<option value='bg-primary'>Primary</option>")
-                        .append("<option value='bg-info'>Info</option>")
-                        .append("<option value='bg-warning'>Warning</option></div></div>");
-                    $this.$modal.find('.delete-event').hide().end().find('.save-event').show().end().find('.modal-body').empty().prepend(form).end().find('.save-event').unbind('click').click(function() {
+                $this.$modal.find("form").on("submit", function () {
+                    calEvent.title = form.find("input[type=text]").val();
+                    $this.$calendarObj.fullCalendar("updateEvent", calEvent);
+                    $this.$modal.modal("hide");
+                    return false;
+                });
+            };
+
+            /* lors de la sélection */
+            CalendarApp.prototype.onSelect = function (start, end, allDay) {
+                var $this = this;
+                $this.$modal.modal({ backdrop: "statique" });
+                var form = $("<form></form>");
+                form.append("<div class='event-inputs'></div>");
+                form.find(".event-inputs")
+                    .append(
+                        "<div class='form-group'><label class='control-label'>Nom de l'événement</label><input class='form-control' placeholder='Insérer le nom de l'événement' type='text' name='title'/></div>"
+                    )
+                    .append(
+                        "<div class='form-group'><label class='control-label'>Catégorie</label><select class='form-control' name='category'></select></div>"
+                    )
+                    .find("select[name='category']")
+                    .append("<option value='bg-danger'>Danger</option>")
+                    .append("<option value='bg-success'>Succès</option>")
+                    .append("<option value='bg-purple'>Violet</option>")
+                    .append("<option value='bg-primary'>Primaire</option>")
+                    .append("<option value='bg-info'>Info</option>")
+                    .append(
+                        "<option value='bg-warning'>Avertissement</option>"
+                    );
+                $this.$modal
+                    .find(".delete-event")
+                    .hide()
+                    .end()
+                    .find(".save-event")
+                    .show()
+                    .end()
+                    .find(".modal-body")
+                    .empty()
+                    .prepend(form)
+                    .end()
+                    .find(".save-event")
+                    .unbind("click")
+                    .click(function () {
                         form.submit();
                     });
-                    $this.$modal.find('form').on('submit', function() {
-                        var title = form.find("input[name='title']").val();
-                        var beginning = form.find("input[name='beginning']").val();
-                        var ending = form.find("input[name='ending']").val();
-                        var categoryClass = form.find("select[name='category'] option:checked").val();
-                        if (title !== null && title.length != 0) {
-                            $this.$calendarObj.fullCalendar('renderEvent', {
+                $this.$modal.find("form").on("submit", function () {
+                    var title = form.find("input[name='title']").val();
+                    var categoryClass = form
+                        .find("select[name='category'] option:checked")
+                        .val();
+                    if (title !== null && title.length != 0) {
+                        $this.$calendarObj.fullCalendar(
+                            "renderEvent",
+                            {
                                 title: title,
                                 start: start,
                                 end: end,
                                 allDay: false,
-                                className: categoryClass
-                            }, true);
-                            $this.$modal.modal('hide');
-                        } else {
-                            alert('You have to give a title to your event');
+                                className: categoryClass,
+                            },
+                            true
+                        );
+                        $this.$modal.modal("hide");
+                    } else {
+                        alert("Vous devez donner un titre à votre événement");
+                    }
+                    return false;
+                });
+                $this.$calendarObj.fullCalendar("unselect");
+            };
+
+            CalendarApp.prototype.enableDrag = function () {
+                $(this.$event).each(function () {
+                    var eventObject = {
+                        title: $.trim($(this).text()),
+                    };
+                    $(this).data("eventObject", eventObject);
+                    $(this).draggable({
+                        zIndex: 999,
+                        revert: true,
+                        revertDuration: 0,
+                    });
+                });
+            };
+
+            /* Initialisation */
+            CalendarApp.prototype.init = function () {
+                this.enableDrag();
+                var $this = this;
+                $this.$calendarObj = $this.$calendar.fullCalendar({
+                    locale: "fr",
+                    slotDuration: "00:15:00",
+                    minTime: "08:00:00",
+                    maxTime: "19:00:00",
+                    defaultView: "month",
+                    handleWindowResize: true,
+
+                    dayRender: function (date, cell) {
+                        var startAt = new Date(self.form_mission.date_debut); // Remplacez par votre date de début
+                        var endAt = new Date(self.form_mission.date_fin); // Remplacez par votre date de fin
+
+                        // Vérifie si la date est dans la plage spécifiée
+                        if (date >= startAt && date <= endAt) {
+                            $(cell).addClass("bg-primary-light"); // Ajoute une classe pour appliquer le style
                         }
-                        return false;
+                    },
+                    header: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "month,agendaWeek,agendaDay",
+                    },
+                    buttonText: {
+                        today: "Aujourd'hui",
+                        month: "Mois",
+                        week: "Semaine",
+                        day: "Jour",
+                    },
+                    events: [],
+                    editable: true,
+                    droppable: true,
+                    eventLimit: true,
+                    selectable: true,
+                    drop: function (date) {
+                        $this.onDrop($(this), date);
+                    },
+                    select: function (start, end, allDay) {
+                        $this.onSelect(start, end, allDay);
+                    },
+                    eventClick: function (calEvent, jsEvent, view) {
+                        $this.onEventClick(calEvent, jsEvent, view);
+                    },
+                });
 
-                    });
-                    $this.$calendarObj.fullCalendar('unselect');
-                },
-                CalendarApp.prototype.enableDrag = function() {
-                    //init events
-                    $(this.$event).each(function() {
-                        // it doesn't need to have a start or end
-                        var eventObject = {
-                            title: $.trim($(this).text()) // use the element's text as the event title
-                        };
-                        // store the Event Object in the DOM element so we can get to it later
-                        $(this).data('eventObject', eventObject);
-                        // make the event draggable using jQuery UI
-                        $(this).draggable({
-                            zIndex: 999,
-                            revert: true, // will cause the event to go back to its
-                            revertDuration: 0 //  original position after the drag
-                        });
-                    });
-                }
-                /* Initializing */
-            CalendarApp.prototype.init = function() {
-                    this.enableDrag();
-                    /*  Initialize the calendar  */
-                    var date = new Date();
-                    var d = date.getDate();
-                    var m = date.getMonth();
-                    var y = date.getFullYear();
-                    var form = '';
-                    var today = new Date($.now());
+                this.$saveCategoryBtn.on("click", function () {
+                    var categoryName = $this.$categoryForm
+                        .find("input[name='category-name']")
+                        .val();
+                    var categoryColor = $this.$categoryForm
+                        .find("select[name='category-color']")
+                        .val();
+                    if (categoryName !== null && categoryName.length != 0) {
+                        $this.$extEvents.append(
+                            '<div class="calendar-events" data-class="bg-' +
+                                categoryColor +
+                                '" style="position: relative;"><i class="fas fa-circle text-' +
+                                categoryColor +
+                                '"></i>' +
+                                categoryName +
+                                "</div>"
+                        );
+                        $this.enableDrag();
+                    }
+                });
+            };
 
-                    var defaultEvents = [{
-                            title: 'Event Name 4',
-                            start: new Date($.now() + 148000000),
-                            className: 'bg-purple'
-                        },
-                        {
-                            title: 'Test Event 1',
-                            start: today,
-                            end: today,
-                            className: 'bg-success'
-                        },
-                        {
-                            title: 'Test Event 2',
-                            start: new Date($.now() + 168000000),
-                            className: 'bg-info'
-                        },
-                        {
-                            title: 'Test Event 3',
-                            start: new Date($.now() + 338000000),
-                            className: 'bg-primary'
-                        }
-                    ];
-
-                    var $this = this;
-                    $this.$calendarObj = $this.$calendar.fullCalendar({
-                        slotDuration: '00:15:00',
-                        /* If we want to split day time each 15minutes */
-                        minTime: '08:00:00',
-                        maxTime: '19:00:00',
-                        defaultView: 'month',
-                        handleWindowResize: true,
-
-                        header: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'month,agendaWeek,agendaDay'
-                        },
-                        events: defaultEvents,
-                        editable: true,
-                        droppable: true, // this allows things to be dropped onto the calendar !!!
-                        eventLimit: true, // allow "more" link when too many events
-                        selectable: true,
-                        drop: function(date) { $this.onDrop($(this), date); },
-                        select: function(start, end, allDay) { $this.onSelect(start, end, allDay); },
-                        eventClick: function(calEvent, jsEvent, view) { $this.onEventClick(calEvent, jsEvent, view); }
-
-                    });
-
-                    //on new event
-                    this.$saveCategoryBtn.on('click', function() {
-                        var categoryName = $this.$categoryForm.find("input[name='category-name']").val();
-                        var categoryColor = $this.$categoryForm.find("select[name='category-color']").val();
-                        if (categoryName !== null && categoryName.length != 0) {
-                            $this.$extEvents.append('<div class="calendar-events" data-class="bg-' + categoryColor + '" style="position: relative;"><i class="fas fa-circle text-' + categoryColor + '"></i>' + categoryName + '</div>')
-                            $this.enableDrag();
-                        }
-
-                    });
-                },
-
-                //init CalendarApp
-                $.CalendarApp = new CalendarApp, $.CalendarApp.Constructor = CalendarApp
-
-            const stepModal = document.getElementById('mission_modal');
-            stepModal.addEventListener('shown.bs.modal', function() {
-                $.CalendarApp.init();
-            });
+            // initier CalendarApp
+            $.CalendarApp = new CalendarApp();
+            $.CalendarApp.Constructor = CalendarApp;
+            $.CalendarApp.init();
         },
 
         loadCollaborateurs() {
@@ -225,17 +294,51 @@ new Vue({
                 .catch((err) => console.log("error"));
         },
 
-
         goToNext() {
             if (this.initialStep < this.steps) {
+                if (
+                    this.initialStep === 1 &&
+                    this.form_mission.date_debut === "" &&
+                    this.form_mission.date_fin === ""
+                ) {
+                    this.error =
+                        "Veuillez entrer la date début et la date fin pour continuer !";
+                    return;
+                }
+                this.error = null;
                 this.initialStep++;
+                if (this.initialStep === 2) {
+                    setTimeout(() => {
+                        this.initCalendar();
+                    }, 100);
+                }
             }
         },
         goToPrev() {
             if (this.initialStep <= this.steps && this.initialStep !== 1) {
                 this.initialStep--;
+                if (this.initialStep === 2) {
+                    setTimeout(() => {
+                        this.initCalendar();
+                    }, 100);
+                }
             }
-        }
+        },
+
+        submitData() {
+            const formData = new FormData(this.form_mission);
+            formData.append("libelle", this.form_mission.libelle);
+            formData.append("date_debut", this.form_mission.date_debut);
+            formData.append("date_fin", this.form_mission.date_fin);
+            formData.append("client_id", this.form_mission.client_id);
+            formData.append("job_id", this.form_mission.job_id);
+            formData.append("manager_id", this.form_mission.manager_id);
+            formData.append(
+                "collaborateur_id",
+                this.form_mission.collaborateur_id
+            );
+            console.log(formData);
+        },
     },
 
     computed: {
@@ -247,6 +350,6 @@ new Vue({
             } else {
                 return "Informations du manager & clients(optionnel)";
             }
-        }
-    }
+        },
+    },
 });

@@ -26,6 +26,8 @@
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables/datatables.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fullcalendar/fullcalendar.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     @yield('styles')

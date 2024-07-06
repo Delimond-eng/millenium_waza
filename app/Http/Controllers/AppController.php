@@ -6,6 +6,7 @@ use App\Models\EvolutionMission;
 use App\Models\Mission;
 use App\Traits\ValidationAndExceptionHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
@@ -27,6 +28,7 @@ class AppController extends Controller
             "collaborateur_id"=> "required|int|exists:users,id",
             "client_id"=> "nullable|int|exists:clients,id",
         ];
+        $request->merge(['user_id' => Auth::id()]);
         //Valide,gere les exceptions et traite la requete et renvoie à la view le resultat
         return $this->validateAndHandle($request, $rules,  function($data) {
             return Mission::create($data);

@@ -43,6 +43,7 @@ new Vue({
                         this.error = data.error;
                     }
                     if (data.result !== undefined) {
+                        this.error = null;
                         this.result = data.result;
                         this.loadRoles();
                         event.target.reset();
@@ -76,6 +77,7 @@ new Vue({
                         this.error = data.error;
                     }
                     if (data.result !== undefined) {
+                        this.error = null;
                         this.result = data.result;
                         event.target.reset();
                     }
@@ -107,6 +109,7 @@ new Vue({
                         this.error = data.error;
                     }
                     if (data.result !== undefined) {
+                        this.error = null;
                         this.result = data.result;
                         this.loadNatureJob();
                         event.target.reset();
@@ -141,6 +144,7 @@ new Vue({
                         this.error = data.error;
                     }
                     if (data.result !== undefined) {
+                        this.error = null;
                         this.result = data.result;
                         this.loadFonctions();
                         event.target.reset();
@@ -175,6 +179,7 @@ new Vue({
                         this.error = data.error;
                     }
                     if (data.result !== undefined) {
+                        this.error = null;
                         this.result = data.result;
                         this.loadJob();
                         event.target.reset();
@@ -210,6 +215,7 @@ new Vue({
                         this.error = data.error;
                     }
                     if (data.result !== undefined) {
+                        this.error = null;
                         this.result = data.result;
                         this.loadPhase();
                         event.target.reset();

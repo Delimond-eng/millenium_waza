@@ -64,7 +64,7 @@
 
     <div class="modal custom-modal fade" id="fonction_modal" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-md">
-            <form  @submit.prevent="createFonction" method="POST" action="{{ route("fonction.create") }}" class="modal-content">
+            <form @submit.prevent="createFonction" method="POST" action="{{ route("fonction.create") }}" class="modal-content">
 
                 @csrf
                 <div class="modal-header border-0 pb-0">
