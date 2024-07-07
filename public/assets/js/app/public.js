@@ -163,6 +163,10 @@ new Vue({
             CalendarApp.prototype.onSelect = function (start, end, allDay) {
                 var $this = this;
                 $this.$modal.modal({ backdrop: "statique" });
+
+                // Aller à la date de début de sélection
+                $this.$calendarObj.fullCalendar("gotoDate", start);
+
                 var form = $("<form></form>");
                 form.append("<div class='event-inputs'></div>");
                 form.find(".event-inputs")
@@ -264,7 +268,6 @@ new Vue({
                     maxTime: "19:00:00",
                     defaultView: "month",
                     handleWindowResize: true,
-
                     dayRender: function (date, cell) {
                         var startAt = new Date(self.form_mission.date_debut); // Remplacez par votre date de début
                         var endAt = new Date(self.form_mission.date_fin); // Remplacez par votre date de fin
@@ -300,6 +303,12 @@ new Vue({
                         $this.onEventClick(calEvent, jsEvent, view);
                     },
                 });
+
+                // Aller à la date de début lors de l'initialisation
+                $this.$calendarObj.fullCalendar(
+                    "gotoDate",
+                    new Date(self.form_mission.date_debut)
+                );
 
                 this.$saveCategoryBtn.on("click", function () {
                     var categoryName = $this.$categoryForm
